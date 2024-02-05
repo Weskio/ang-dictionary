@@ -2,3 +2,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.dark-main{
+    background-color: rgb(26, 25, 25);
+    color: white;
+
+    .search{
+        background-color: rgb(54, 54, 54);
+    }
+
+    .link{
+        color: white;
+    }
+
+    .select{
+        background: transparent;
+    }
+}
