@@ -1,24 +1,44 @@
 <main
-  [ngClass]="{ 'w-full': true, 'pb-60 ease-in': true, 'dark-main': isDarkMode, '':selectedFont }">
-  <div class="body px-[10%] lg:px-[20%] pt-8 pb-8"
-  [ngStyle] ="{'font-family': selectedFont}"
+  [ngClass]="{
+    'w-full': true,
+    'pb-60 ease-in': true,
+    'dark-main': isDarkMode,
+    '': selectedFont
+  }"
+>
+  <div
+    class="body px-[10%] lg:px-[20%] pt-8 pb-8"
+    [ngStyle]="{ 'font-family': selectedFont }"
   >
     <div class="header flex relative w-full">
       <img src="../assets/images/logo.svg" alt="" />
 
       <div class="left ml-auto divide-x-2 flex">
         <div class="font-select p-1 absolute z-10 right-16">
-          <div class="drop flex gap-2 cursor-pointer w-24" (click)="toggleDropdown()">
+          <div
+            class="drop flex gap-2 cursor-pointer w-24"
+            (click)="toggleDropdown()"
+          >
             <p>Serif</p>
-            <img src="../assets/images/icon-arrow-down.svg" alt="" [ngClass]="{'rotate-180 transition ease-in-out 600ms' :isDropRotated}"/>
+            <img
+              src="../assets/images/icon-arrow-down.svg"
+              alt=""
+              [ngClass]="{
+                'rotate-180 transition ease-in-out 600ms': isDropRotated
+              }"
+            />
           </div>
 
           @if (isDropdown) {
           <div class="list -ml-2 shadow-2xl p-2">
             <ul>
               <li class="cursor-pointer" (click)="applyFont('first')">Serif</li>
-              <li class="cursor-pointer" (click)="applyFont('Sherif')">Sans serif</li>
-              <li class="cursor-pointer" (click)="applyFont('mono')">Monospace</li>
+              <li class="cursor-pointer" (click)="applyFont('Sherif')">
+                Sans serif
+              </li>
+              <li class="cursor-pointer" (click)="applyFont('mono')">
+                Monospace
+              </li>
             </ul>
           </div>
           }
@@ -73,7 +93,7 @@
     <div class="meaning mt-8">
       <div class="word-audio flex">
         <div class="p">
-          <p class="font-bold text-[3.8rem] lowercase">{{ searchKey.value }}</p>
+          <p class="font-bold text-[3.8rem] lowercase">{{word }}</p>
           <p class="text-purple-400 text-lg font-semibold">/{{ phonetic }}/</p>
         </div>
 
@@ -95,18 +115,6 @@
             ></div>
             {{ meaning }}
           </li>
-          <!-- <li class="mt-2 relative">
-              <div class="h-2 w-2  bg-purple-500 rounded-full absolute -left-4 top-2.5"></div>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Optio
-              accusamus perferendis quas nostrum earum fugit repellendus veniam
-              illum iusto eaque!
-            </li>
-            <li class="mt-2 relative">
-              <div class="h-2 w-2  bg-purple-500 rounded-full absolute -left-4 top-2.5"></div>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Optio
-              accusamus perferendis quas nostrum earum fugit repellendus veniam
-              illum iusto eaque!
-            </li> -->
         </ul>
       </div>
 
@@ -115,7 +123,7 @@
 
         <ul class="w-32 mr-32">
           <li
-            class="ml-3  text-purple-500 font-bold "
+            class="ml-3 text-purple-500 font-bold"
             *ngFor="let synonym of synonyms"
           >
             {{ synonym }}
@@ -189,14 +197,27 @@
         >
       </p>
     </div>
-    } @else {
+    } 
+    @else if (isThereError) {
+      <div class="error w-full relative">
+        <p class="absolute left-0 right-0">oops we didn't find a meaning for your word</p>
+        <img
+        src="../assets/images/error.png"
+        width="600px"
+        class="ml-auto mr-auto mt-24"
+        alt=""
+      />
+      </div>  
+    }
+    @else{
     <img
       src="../assets/images/homebg.png"
       alt=""
       width="600px"
       class="ml-auto mr-auto mt-24"
     />
-
     }
+
+      
   </div>
 </main>
