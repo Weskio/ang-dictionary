@@ -1,4 +1,6 @@
-<main [ngClass]=" {'w-full':true, 'dark-main':isDarkMode} ">
+<main
+  [ngClass]="{ 'w-full': true, 'pb-60 ease-in': true, 'dark-main': isDarkMode }"
+>
   <div class="body px-[10%] lg:px-[20%] pt-8 pb-8">
     <div class="header flex w-full">
       <img src="../assets/images/logo.svg" alt="" />
@@ -21,11 +23,30 @@
 
         <div class="toggle-cont flex -mt-2">
           <div class="toggle-switch">
-            <input class="toggle-input" id="toggle" type="checkbox"  (click)="toggleTheme()"/>
+            <input
+              class="toggle-input"
+              id="toggle"
+              type="checkbox"
+              (click)="toggleTheme()"
+            />
             <label class="toggle-label" for="toggle"></label>
           </div>
 
-          <img src="../assets/images/icon-moon.svg" alt="" class="w-5" />
+          <svg
+            class="w-6 h-6 mt-2.5 text-purple-500 dark:text-white"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 21a9 9 0 0 1-.5-18v0A9 9 0 0 0 20 15h.5a9 9 0 0 1-8.5 6Z"
+            />
+          </svg>
         </div>
       </div>
     </div>
@@ -34,43 +55,122 @@
       <input
         type="search"
         placeholder="search for a word here..."
+        #searchKey
         class="bg-zinc-100 search w-full placeholder:font-normal font-bold p-4 rounded-lg focus:outline-none focus:outline-purple-500 focus:ring-0 focus:border-0"
       />
       <img
         src="../assets/images/icon-search.svg"
         alt=""
         class="absolute top-5 right-5"
+        (click)="fetchData(searchKey.value)"
       />
     </div>
 
+    @if(isWordEntered){
     <div class="meaning mt-8">
       <div class="word-audio flex">
         <div class="p">
-          <p class="font-bold text-[3.8rem] lowercase">Keyboard</p>
-          <p class="text-purple-400 text-lg font-semibold">/hi/</p>
+          <p class="font-bold text-[3.8rem] lowercase">{{ searchKey.value }}</p>
+          <p class="text-purple-400 text-lg font-semibold">/{{ phonetic }}/</p>
         </div>
 
         <img src="../assets/images/icon-play.svg" alt="" class="ml-auto w-14" />
       </div>
 
       <div class="prefix flex mt-5 gap-0">
-        <p class="font-bold text-lg">noun</p>
+        <p class="font-bold text-lg italic">noun</p>
         <div class="h-[0.07rem] mt-4 ml-2 w-full bg-zinc-100"></div>
       </div>
 
       <div class="meanings mt-7">
         <p class="text-zinc-400 font-semibold">Meaning</p>
 
-        <ul class="list-disc ml-8 mt-2">
-          <li class="mt-2 disc-purple-500">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Necessitatibus ipsa deserunt quisquam.
+        <ul class="ml-8 mt-2">
+          <li class="mt-2 relative" *ngFor="let meaning of meaning">
+            <div
+              class="h-2 w-2 bg-purple-500 rounded-full absolute -left-4 top-2.5"
+            ></div>
+            {{ meaning }}
           </li>
-          <li class="mt-2">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit sequi
-            earum ipsam quia exercitationem cumque nobis!
+          <!-- <li class="mt-2 relative">
+              <div class="h-2 w-2  bg-purple-500 rounded-full absolute -left-4 top-2.5"></div>
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Optio
+              accusamus perferendis quas nostrum earum fugit repellendus veniam
+              illum iusto eaque!
+            </li>
+            <li class="mt-2 relative">
+              <div class="h-2 w-2  bg-purple-500 rounded-full absolute -left-4 top-2.5"></div>
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Optio
+              accusamus perferendis quas nostrum earum fugit repellendus veniam
+              illum iusto eaque!
+            </li> -->
+        </ul>
+      </div>
+
+      <div class="synonym mt-12 flex">
+        <p class="text-zinc-400 font-semibold">Synonyms</p>
+
+        <ul>
+          <li
+            class="ml-3 text-purple-500 font-bold"
+            *ngFor="let synonym of synonyms"
+          >
+            {{ synonym }}
           </li>
-          <li class="mt-2">
+        </ul>
+      </div>
+
+      <div class="prefix flex mt-12 gap-0">
+        <p class="font-bold text-lg italic">verb</p>
+        <div class="h-[0.07rem] mt-4 ml-2 w-full bg-zinc-100"></div>
+      </div>
+
+      <div class="meanings mt-7">
+        <p class="text-zinc-400 font-semibold">Meaning</p>
+
+        <ul class="ml-8 mt-2">
+          <li class="mt-2 relative">
+            <div
+              class="h-2 w-2 bg-purple-500 rounded-full absolute -left-4 top-2.5"
+            ></div>
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Optio
+            <p class="text-zinc-400">
+              "sit amet consectetur adipisicing elit. Necessitatibus ipsa
+              deserunt quisquam."
+            </p>
+          </li>
+        </ul>
+      </div>
+
+      <div class="prefix flex mt-12 gap-0">
+        <p class="font-bold text-lg italic">interjection</p>
+        <div class="h-[0.07rem] mt-4 ml-2 w-full bg-zinc-100"></div>
+      </div>
+
+      <div class="meanings mt-7">
+        <p class="text-zinc-400 font-semibold">Meaning</p>
+
+        <ul class="ml-8 mt-2">
+          <li class="mt-2 relative">
+            <div
+              class="h-2 w-2 bg-purple-500 rounded-full absolute -left-4 top-2.5"
+            ></div>
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Optio
+            accusamus perferendis quas nostrum earum fugit repellendus veniam
+            illum iusto eaque!
+          </li>
+          <li class="mt-2 relative">
+            <div
+              class="h-2 w-2 bg-purple-500 rounded-full absolute -left-4 top-2.5"
+            ></div>
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Optio
+            accusamus perferendis quas nostrum earum fugit repellendus veniam
+            illum iusto eaque!
+          </li>
+          <li class="mt-2 relative">
+            <div
+              class="h-2 w-2 bg-purple-500 rounded-full absolute -left-4 top-2.5"
+            ></div>
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Optio
             accusamus perferendis quas nostrum earum fugit repellendus veniam
             illum iusto eaque!
@@ -78,36 +178,21 @@
         </ul>
       </div>
 
-      <div class="synonym mt-12 flex">
-        <p class="text-zinc-400 font-semibold">Synonyms</p>
-        <span class="ml-3 text-purple-500 font-bold"
-          >electronic keyboard</span
-        >
-      </div>
-
-      <div class="prefix flex mt-8 gap-0">
-        <p class="font-bold text-lg">verb</p>
-        <div class="h-[0.07rem] mt-4 ml-2 w-full bg-zinc-100"></div>
-      </div>
-
-      <div class="meanings mt-7">
-        <p class="text-zinc-400 font-semibold">Meaning</p>
-
-        <ul class="list-disc ml-8 mt-2">
-          <li class="mt-2">
-            <p>
-              Lorem ipsum dolor sit amet consectetur,
-            </p>
-            <p class="text-zinc-400">
-              "sit amet consectetur adipisicing elit.
-              Necessitatibus ipsa deserunt quisquam."
-            </p>
-          </li>
-        </ul>
-      </div>
-
       <div class="h-[0.07rem] mt-12 ml-2 w-full bg-zinc-100"></div>
-      <p class="text-zinc-400 mt-5 ml-2">Source: <span class="underline link cursor-pointer text-black">http://localhost:4200/</span></p> 
+      <p class="text-zinc-400 mt-5 ml-2">
+        Source:
+        <span class="underline link cursor-pointer text-black"
+          >http://localhost:4200/</span
+        >
+      </p>
     </div>
+    } @else {
+      <img
+      src="https://img.freepik.com/free-vector/concept-house-searching-landing-page_52683-24921.jpg?w=740&t=st=1707151377~exp=1707151977~hmac=ccca11e0750db1a7305144cdfe07d7908a383b25ab09f367a95de2f1a366f473"
+      alt=""
+      class="ml-auto mr-auto"
+    />
+
+    }
   </div>
 </main>

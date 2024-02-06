@@ -9,6 +9,7 @@
 
     .search{
         background-color: rgb(54, 54, 54);
+        transition: ease-in 300ms;
     }
 
     .link{
@@ -18,4 +19,6 @@
     .select{
         background: transparent;
     }
+
+    transition: ease-in 300ms;
 }
