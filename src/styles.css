@@ -3,7 +3,37 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+    font-family: Sherif;
+    src: url(./assets/fonts/lora/Lora-Italic-VariableFont_wght.ttf);
+}
+
+@font-face {
+    font-family: first  ;
+    src: url(./assets/fonts/inter/Inter-VariableFont_slnt\,wght.ttf);
+}
+
+@font-face {
+    font-family: mono;
+    src: url(./assets/fonts/inconsolata/Inconsolata-VariableFont_wdth\,wght.ttf);
+}
+
+.sans-serif{
+    font-family: Sherif, serif;
+}
+
+.default {
+    font-family: first , serif; 
+}
+
+.mono{
+    font-family: mono, serif;
+}
+
+
 .dark-main{
+  
+  
     background-color: rgb(26, 25, 25);
     color: white;
 

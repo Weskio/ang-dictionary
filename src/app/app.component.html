@@ -1,24 +1,27 @@
 <main
-  [ngClass]="{ 'w-full': true, 'pb-60 ease-in': true, 'dark-main': isDarkMode }"
->
-  <div class="body px-[10%] lg:px-[20%] pt-8 pb-8">
-    <div class="header flex w-full">
+  [ngClass]="{ 'w-full': true, 'pb-60 ease-in': true, 'dark-main': isDarkMode, '':selectedFont }">
+  <div class="body px-[10%] lg:px-[20%] pt-8 pb-8"
+  [ngStyle] ="{'font-family': selectedFont}"
+  >
+    <div class="header flex relative w-full">
       <img src="../assets/images/logo.svg" alt="" />
 
-      <div class="left ml-auto flex">
-        <div class="font-select divide-x-2 p-1">
-          <select
-            id="Subject"
-            name="Subject"
-            data-name="Subject"
-            required=""
-            class="select w-14"
-            aria-required="true"
-          >
-            <option value="">Serif</option>
-            <option value="First">Sans serif</option>
-            <option value="Second">Monospace</option>
-          </select>
+      <div class="left ml-auto divide-x-2 flex">
+        <div class="font-select p-1 absolute z-10 right-16">
+          <div class="drop flex gap-2 cursor-pointer w-24" (click)="toggleDropdown()">
+            <p>Serif</p>
+            <img src="../assets/images/icon-arrow-down.svg" alt="" [ngClass]="{'rotate-180 transition ease-in-out 600ms' :isDropRotated}"/>
+          </div>
+
+          @if (isDropdown) {
+          <div class="list -ml-2 shadow-2xl p-2">
+            <ul>
+              <li class="cursor-pointer" (click)="applyFont('first')">Serif</li>
+              <li class="cursor-pointer" (click)="applyFont('Sherif')">Sans serif</li>
+              <li class="cursor-pointer" (click)="applyFont('mono')">Monospace</li>
+            </ul>
+          </div>
+          }
         </div>
 
         <div class="toggle-cont flex -mt-2">
@@ -107,12 +110,12 @@
         </ul>
       </div>
 
-      <div class="synonym mt-12 flex">
+      <div class="synonym mt-12 flex w-full">
         <p class="text-zinc-400 font-semibold">Synonyms</p>
 
-        <ul>
+        <ul class="w-32 mr-32">
           <li
-            class="ml-3 text-purple-500 font-bold"
+            class="ml-3  text-purple-500 font-bold "
             *ngFor="let synonym of synonyms"
           >
             {{ synonym }}
@@ -187,10 +190,11 @@
       </p>
     </div>
     } @else {
-      <img
-      src="https://img.freepik.com/free-vector/concept-house-searching-landing-page_52683-24921.jpg?w=740&t=st=1707151377~exp=1707151977~hmac=ccca11e0750db1a7305144cdfe07d7908a383b25ab09f367a95de2f1a366f473"
+    <img
+      src="../assets/images/homebg.png"
       alt=""
-      class="ml-auto mr-auto"
+      width="600px"
+      class="ml-auto mr-auto mt-24"
     />
 
     }

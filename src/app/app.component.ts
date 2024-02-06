@@ -1,4 +1,4 @@
-import { NgClass, NgFor } from '@angular/common';
+import { NgClass, NgFor, NgStyle } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { response } from 'express';
@@ -6,7 +6,7 @@ import { response } from 'express';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NgClass, NgFor],
+  imports: [RouterOutlet, NgClass, NgFor, NgStyle],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
@@ -16,17 +16,29 @@ export class AppComponent {
   data: any | undefined;
   phonetic?: string;
   meaning?: [];
-  isWordEntered?: boolean
+  isWordEntered?: boolean;
   //definition?: string;
   partOfSpeech?: [];
   synonyms?: [];
+  isDropdown?: boolean;
+  isDropRotated?: boolean;
+  selectedFont = 'first';
 
   toggleTheme() {
     this.isDarkMode = !this.isDarkMode;
   }
 
+  toggleDropdown() {
+    this.isDropdown = !this.isDropdown;
+    this.isDropRotated = !this.isDropRotated;
+  }
+
+  applyFont(font:string){
+    this.selectedFont = font
+  }
+
   fetchData(text: string) {
-    this.isWordEntered=true
+    this.isWordEntered = true;
     return fetch(`${this.url}${text}`)
       .then((response) => response.json())
       .then((data) => {
