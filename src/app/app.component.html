@@ -75,18 +75,24 @@
     </div>
 
     <div class="search-bar mt-8 relative">
-      <input
+
+      <form (submit)="fetchData(searchKey)">
+        <input
         type="text"
         placeholder="search for a word here..."
-        #searchKey
+        [(ngModel)] = "searchKey"
+        name="search"
         class="bg-zinc-100 search w-full placeholder:font-normal font-bold p-4 rounded-lg focus:outline-none focus:outline-purple-500 focus:ring-0 focus:border-0"
       />
-      <img
+      <button type="submit">
+        <img
         src="../assets/images/icon-search.svg"
         alt=""
         class="absolute top-5 right-5"
-        (click)="fetchData(searchKey.value)"
       />
+      </button>
+      </form>
+      
     </div>
 
     @if(isWordEntered){
@@ -112,93 +118,38 @@
         </div>
       </div>
 
-      <div class="prefix flex mt-5 gap-0">
-        <p class="font-bold text-lg italic">noun</p>
-        <div class="h-[0.07rem] mt-4 ml-2 w-full bg-zinc-100"></div>
-      </div>
+      <div class="meanings">
 
-      <div class="meanings mt-7">
-        <p class="text-zinc-400 font-semibold">Meaning</p>
+        <div class="prefix flex mt-5 gap-0">
+          <p class="font-bold text-lg italic">{{partOfSpeech}}</p>
+          <div class="h-[0.07rem] mt-4 ml-2 w-full bg-zinc-100"></div>
+        </div>
 
-        <ul class="ml-8 mt-2">
-          <li class="mt-2 relative" *ngFor="let meaning of meaning">
-            <div
-              class="h-2 w-2 bg-purple-500 rounded-full absolute -left-4 top-2.5"
-            ></div>
-            {{ meaning }}
-          </li>
-        </ul>
-      </div>
+        <div class="meanings mt-7">
+          <p class="text-zinc-400 font-semibold">Meaning</p>
+  
+          <ul class="ml-8 mt-2">
+            <li class="mt-2 relative" *ngFor="let meaning of meaning">
+              <div
+                class="h-2 w-2 bg-purple-500 rounded-full absolute -left-4 top-2.5"
+              ></div>
+              {{ meaning }}
+            </li>
+          </ul>
+        </div>
 
-      <div class="synonym mt-12 flex w-full">
-        <p class="text-zinc-400 font-semibold">Synonyms</p>
-
-        <ul class="w-32 mr-32">
-          <li
-            class="ml-3 text-purple-500 font-bold"
-            *ngFor="let synonym of synonyms"
-          >
-            {{ synonym }}
-          </li>
-        </ul>
-      </div>
-
-      <div class="prefix flex mt-12 gap-0">
-        <p class="font-bold text-lg italic">verb</p>
-        <div class="h-[0.07rem] mt-4 ml-2 w-full bg-zinc-100"></div>
-      </div>
-
-      <div class="meanings mt-7">
-        <p class="text-zinc-400 font-semibold">Meaning</p>
-
-        <ul class="ml-8 mt-2">
-          <li class="mt-2 relative">
-            <div
-              class="h-2 w-2 bg-purple-500 rounded-full absolute -left-4 top-2.5"
-            ></div>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Optio
-            <p class="text-zinc-400">
-              "sit amet consectetur adipisicing elit. Necessitatibus ipsa
-              deserunt quisquam."
-            </p>
-          </li>
-        </ul>
-      </div>
-
-      <div class="prefix flex mt-12 gap-0">
-        <p class="font-bold text-lg italic">interjection</p>
-        <div class="h-[0.07rem] mt-4 ml-2 w-full bg-zinc-100"></div>
-      </div>
-
-      <div class="meanings mt-7">
-        <p class="text-zinc-400 font-semibold">Meaning</p>
-
-        <ul class="ml-8 mt-2">
-          <li class="mt-2 relative">
-            <div
-              class="h-2 w-2 bg-purple-500 rounded-full absolute -left-4 top-2.5"
-            ></div>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Optio
-            accusamus perferendis quas nostrum earum fugit repellendus veniam
-            illum iusto eaque!
-          </li>
-          <li class="mt-2 relative">
-            <div
-              class="h-2 w-2 bg-purple-500 rounded-full absolute -left-4 top-2.5"
-            ></div>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Optio
-            accusamus perferendis quas nostrum earum fugit repellendus veniam
-            illum iusto eaque!
-          </li>
-          <li class="mt-2 relative">
-            <div
-              class="h-2 w-2 bg-purple-500 rounded-full absolute -left-4 top-2.5"
-            ></div>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Optio
-            accusamus perferendis quas nostrum earum fugit repellendus veniam
-            illum iusto eaque!
-          </li>
-        </ul>
+        <div class="synonym mt-12 flex w-full">
+          <p class="text-zinc-400 font-semibold">Synonyms</p>
+  
+          <ul class="w-full mr-32">
+            <li
+              class="ml-3 text-purple-500 font-bold"
+              *ngFor="let synonym of synonyms"
+            >
+              {{ synonym }}
+            </li>
+          </ul>
+        </div>
       </div>
 
       <div class="h-[0.07rem] mt-12 ml-2 w-full bg-zinc-100"></div>
@@ -211,9 +162,6 @@
     </div>
     } @else if (isThereError) {
     <div class="error w-full relative">
-      <p class="absolute left-0 right-0">
-        oops we didn't find a meaning for your word
-      </p>
       <img
         src="../assets/images/error.png"
         width="600px"
