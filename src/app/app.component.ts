@@ -25,7 +25,6 @@ export class AppComponent {
   partOfSpeech: string[] = [];
   synonyms: string[] = [];
 
-
   // booleans
   isDarkMode = false;
   isWordEntered = false;
@@ -56,20 +55,26 @@ export class AppComponent {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
+        // console.log(data);
+        // console.log(data.meanings.definitions[1]);
         this.isWordEntered = true;
         this.data = data;
         this.word = data[0].word;
         this.phonetic = data[0].phonetic;
-        this.meaning = data[0].meanings[1].definitions.map(
-          (definition: { definition: any }) => definition.definition
-        );
-        this.synonyms = data[0].meanings[1].definitions.flatMap(
-          (definition: { synonyms: any }) => definition.synonyms || []
-        );
+
+        // this.meaning = data
+
         this.partOfSpeech = data[0].meanings.flatMap(
           (meaning: { partOfSpeech: any }) => meaning.partOfSpeech || []
         );
+
+        this.meaning = data[0].meanings[0].definitions.map(
+          (definition: { definition: any }) => definition.definition
+        );
+        this.synonyms = data[0].meanings[0].definitions.flatMap(
+          (definition: { synonyms: any }) => definition.synonyms || []
+        );
+
         console.log(this.partOfSpeech);
         console.log(this.meaning);
         return data;

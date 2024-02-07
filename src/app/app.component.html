@@ -75,24 +75,22 @@
     </div>
 
     <div class="search-bar mt-8 relative">
-
       <form (submit)="fetchData(searchKey)">
         <input
-        type="text"
-        placeholder="search for a word here..."
-        [(ngModel)] = "searchKey"
-        name="search"
-        class="bg-zinc-100 search w-full placeholder:font-normal font-bold p-4 rounded-lg focus:outline-none focus:outline-purple-500 focus:ring-0 focus:border-0"
-      />
-      <button type="submit">
-        <img
-        src="../assets/images/icon-search.svg"
-        alt=""
-        class="absolute top-5 right-5"
-      />
-      </button>
+          type="text"
+          placeholder="search for a word here..."
+          [(ngModel)]="searchKey"
+          name="search"
+          class="bg-zinc-100 search w-full placeholder:font-normal font-bold p-4 rounded-lg focus:outline-none focus:outline-purple-500 focus:ring-0 focus:border-0"
+        />
+        <button type="submit">
+          <img
+            src="../assets/images/icon-search.svg"
+            alt=""
+            class="absolute top-5 right-5"
+          />
+        </button>
       </form>
-      
     </div>
 
     @if(isWordEntered){
@@ -118,16 +116,16 @@
         </div>
       </div>
 
-      <div class="meanings">
-
-        <div class="prefix flex mt-5 gap-0">
-          <p class="font-bold text-lg italic">{{partOfSpeech}}</p>
+      <div class="meanings-wrap">
+        <div class="prefix flex mt-5 gap-0" *ngFor="let speech of partOfSpeech">
+          <p class="font-bold text-lg italic">{{ speech }}</p>
           <div class="h-[0.07rem] mt-4 ml-2 w-full bg-zinc-100"></div>
+          {{ data.meanings?.definition }}
         </div>
 
         <div class="meanings mt-7">
           <p class="text-zinc-400 font-semibold">Meaning</p>
-  
+
           <ul class="ml-8 mt-2">
             <li class="mt-2 relative" *ngFor="let meaning of meaning">
               <div
@@ -140,7 +138,7 @@
 
         <div class="synonym mt-12 flex w-full">
           <p class="text-zinc-400 font-semibold">Synonyms</p>
-  
+
           <ul class="w-full mr-32">
             <li
               class="ml-3 text-purple-500 font-bold"
