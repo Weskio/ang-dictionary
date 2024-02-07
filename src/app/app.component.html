@@ -93,11 +93,23 @@
     <div class="meaning mt-8">
       <div class="word-audio flex">
         <div class="p">
-          <p class="font-bold text-[3.8rem] lowercase">{{word }}</p>
+          <p class="font-bold text-[3.8rem] lowercase">{{ word }}</p>
           <p class="text-purple-400 text-lg font-semibold">/{{ phonetic }}/</p>
         </div>
-
-        <img src="../assets/images/icon-play.svg" alt="" class="ml-auto w-14" />
+        <div class="audio ml-auto w-14">
+          <img
+            src="../assets/images/icon-play.svg"
+            alt=""
+            class="ml-auto w-14 cursor-pointer"
+            (click)="audioPlay()"
+          />
+          <audio>
+            <source
+              src="https://api.dictionaryapi.dev/media/pronunciations/en/born-us.mp3"
+              type="audio/mpeg"
+            />
+          </audio>
+        </div>
       </div>
 
       <div class="prefix flex mt-5 gap-0">
@@ -197,19 +209,19 @@
         >
       </p>
     </div>
-    } 
-    @else if (isThereError) {
-      <div class="error w-full relative">
-        <p class="absolute left-0 right-0">oops we didn't find a meaning for your word</p>
-        <img
+    } @else if (isThereError) {
+    <div class="error w-full relative">
+      <p class="absolute left-0 right-0">
+        oops we didn't find a meaning for your word
+      </p>
+      <img
         src="../assets/images/error.png"
         width="600px"
         class="ml-auto mr-auto mt-24"
         alt=""
       />
-      </div>  
-    }
-    @else{
+    </div>
+    } @else{
     <img
       src="../assets/images/homebg.png"
       alt=""
@@ -217,7 +229,5 @@
       class="ml-auto mr-auto mt-24"
     />
     }
-
-      
   </div>
 </main>

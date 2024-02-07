@@ -1,5 +1,5 @@
 import { NgClass, NgFor, NgIf, NgStyle } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { response } from 'express';
 
@@ -24,6 +24,7 @@ export class AppComponent {
   selectedFont = 'first';
   isThereError = false;
   word?: string;
+  audio?: string;
 
   toggleTheme() {
     this.isDarkMode = !this.isDarkMode;
@@ -37,6 +38,8 @@ export class AppComponent {
   applyFont(font: string) {
     this.selectedFont = font;
   }
+
+  
 
   fetchData(text: string) {
     return fetch(`${this.url}${text}`)
@@ -61,13 +64,23 @@ export class AppComponent {
         this.partOfSpeech = data[0].meanings.flatMap(
           (meaning: { partOfSpeech: any }) => meaning.partOfSpeech || []
         );
+        //this.audio = data[0].phonetics[1]?.audio;
         console.log(this.partOfSpeech);
         console.log(this.meaning);
+        return data;
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
         this.isThereError = true;
         this.isWordEntered = false;
       });
   }
+
+  audioPlay(){
+    let audio = new Audio;
+    audio.src = this.data[0].phonetics[0].audio ;
+    audio.load();
+    audio.play();
+  }
+
 }
