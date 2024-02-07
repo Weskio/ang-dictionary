@@ -39,8 +39,6 @@ export class AppComponent {
     this.selectedFont = font;
   }
 
-  
-
   fetchData(text: string) {
     return fetch(`${this.url}${text}`)
       .then((response) => {
