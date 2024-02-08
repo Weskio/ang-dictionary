@@ -16,7 +16,6 @@ import { url } from 'inspector';
 export class AppComponent {
   url = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
   // strings
-  try = 'woah';
   searchKey?: string;
   data: any;
   phonetic?: string;
@@ -25,9 +24,9 @@ export class AppComponent {
   selectedFont = 'first';
 
   // array initials
-  meaning: string[] = [];
+  meanings = [];
   partOfSpeech: string[] = [];
-  synonyms: string[] = [];
+  synonymsArray: string[] = [];
 
   // booleans
   isDarkMode = false;
@@ -89,6 +88,7 @@ export class AppComponent {
         this.isThereError = true;
         this.isWordEntered = false;
       });
+
   }
 
   audioPlay() {
@@ -137,4 +137,19 @@ export class AppComponent {
     console.log(synonyms);
     return synonyms;
   }
+
+  getAntonymsByPartOfSpeech(speech: string) {
+    const antonyms = [];
+
+    for (let partSpeech of this.data[0].meanings) {
+      if (partSpeech.partOfSpeech === speech) {
+        for (let definition of partSpeech.definitions) {
+          antonyms.push(...definition.antonyms);
+        }
+      }
+    }
+    return antonyms;
+  }
+  
+
 }
