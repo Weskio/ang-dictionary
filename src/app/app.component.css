@@ -16,14 +16,23 @@
 
 .sans-serif{
   font-family: Sherif, serif;
+  .speech{
+    font-style: italic;
+}
 }
 
 .default {
   font-family: first , serif; 
+  .speech{
+    font-style: italic;
+}
 }
 
 .mono{
   font-family: mono, serif;
+  .speech{
+    font-style: italic;
+}
 }
 
 

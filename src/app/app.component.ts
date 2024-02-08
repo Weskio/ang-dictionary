@@ -15,18 +15,20 @@ import { url } from 'inspector';
 })
 export class AppComponent {
   url = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
+  
   // strings
   searchKey?: string;
   data: any;
   phonetic?: string;
   word?: string;
   audio?: string;
+  wordUrl? :string;
   selectedFont = 'first';
+  fontsArray = ['Serif', 'Sans Serif', 'Monospace'];
+  currentFont = this.fontsArray[0]
 
   // array initials
-  meanings = [];
   partOfSpeech: string[] = [];
-  synonymsArray: string[] = [];
 
   // booleans
   isDarkMode = false;
@@ -44,12 +46,12 @@ export class AppComponent {
     this.isDropRotated = !this.isDropRotated;
   }
 
-  applyFont(font: string) {
+  applyFont(font: string, i:number) {
     this.selectedFont = font;
+    this.currentFont=  this.fontsArray[i]
   }
 
   fetchData(text?: string) {
-    console.log('fetched');
     return fetch(`${this.url}${text}`)
       .then((response) => {
         if (!response.ok) {
@@ -58,29 +60,17 @@ export class AppComponent {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
-        // console.log(data.meanings.definitions[1]);
         this.isWordEntered = true;
+
+        console.log(data)
         this.data = data;
         this.word = data[0].word;
-        this.phonetic = data[0].phonetic;
-
-        // this.meaning = data
+        this.phonetic = data[0].phonetic || data[0].phonetics[0].text;
+        this.wordUrl = data[0].sourceUrls;
 
         this.partOfSpeech = data[0].meanings.flatMap(
           (meaning: { partOfSpeech: any }) => meaning.partOfSpeech || []
         );
-
-        // this.meaning = data[0].meanings[0].definitions.map(
-        //   (definition: { definition: any }) => definition.definition
-        // );
-        // this.synonyms = data[0].meanings[0].definitions.flatMap(
-        //   (definition: { synonyms: any }) => definition.synonyms || []
-        // );
-
-        // console.log(this.partOfSpeech);
-        // console.log(this.meaning);
-        console.log(this.partOfSpeech);
         return data;
       })
       .catch((err) => {
@@ -88,7 +78,6 @@ export class AppComponent {
         this.isThereError = true;
         this.isWordEntered = false;
       });
-
   }
 
   audioPlay() {
@@ -104,8 +93,6 @@ export class AppComponent {
     const speech = this.data[0].meanings.flatMap(
       (meaning: { partOfSpeech: any }) => meaning.partOfSpeech || []
     );
-
-    console.log(speech);
   }
 
   getMeaningsByPartOfSpeech(speech: string) {
@@ -119,7 +106,6 @@ export class AppComponent {
       }
     }
 
-    console.log(meanings);
     return meanings;
   }
 
@@ -134,7 +120,6 @@ export class AppComponent {
       }
     }
 
-    console.log(synonyms);
     return synonyms;
   }
 
@@ -150,6 +135,4 @@ export class AppComponent {
     }
     return antonyms;
   }
-  
-
 }

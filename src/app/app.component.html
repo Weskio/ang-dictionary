@@ -14,12 +14,12 @@
       <img src="../assets/images/logo.svg" alt="" />
 
       <div class="left ml-auto divide-x-2 flex">
-        <div class="font-select p-1 absolute z-10 right-16">
+        <div class="font-select w-32 p-1 absolute z-10 right-24">
           <div
             class="drop flex gap-2 cursor-pointer w-24"
             (click)="toggleDropdown()"
           >
-            <p>Serif</p>
+            <p class="">{{currentFont}}</p>
             <img
               src="../assets/images/icon-arrow-down.svg"
               alt=""
@@ -32,11 +32,11 @@
           @if (isDropdown) {
           <div class="list -ml-2 shadow-2xl p-2">
             <ul>
-              <li class="cursor-pointer" (click)="applyFont('first')">Serif</li>
-              <li class="cursor-pointer" (click)="applyFont('Sherif')">
+              <li class="cursor-pointer" (click)="applyFont('first',0)">Serif</li>
+              <li class="cursor-pointer" (click)="applyFont('Sherif',1)">
                 Sans serif
               </li>
-              <li class="cursor-pointer" (click)="applyFont('mono')">
+              <li class="cursor-pointer" (click)="applyFont('mono',2)">
                 Monospace
               </li>
             </ul>
@@ -98,8 +98,11 @@
       <div class="word-audio flex">
         <div class="p">
           <p class="font-bold text-[3.8rem] lowercase">{{ word }}</p>
-          <p class="text-purple-400 text-lg font-semibold">/{{ phonetic }}/</p>
+          @if(phonetic){
+            <p class="text-purple-400 text-lg font-semibold">/{{ phonetic }}/</p>
+          }      
         </div>
+
         <div class="audio ml-auto w-14">
           <img
             src="../assets/images/icon-play.svg"
@@ -107,18 +110,13 @@
             class="ml-auto w-14 cursor-pointer"
             (click)="audioPlay()"
           />
-          <audio>
-            <source
-              src="https://api.dictionaryapi.dev/media/pronunciations/en/born-us.mp3"
-              type="audio/mpeg"
-            />
-          </audio>
         </div>
+
       </div>
 
       <div class="meanings-wrap" *ngFor="let speech of partOfSpeech ; let i =index">
         <div class="prefix flex mt-5 gap-0" >
-          <p class="font-bold text-lg italic">{{ speech }}</p>
+          <p class="font-bold text-lg italic speech">{{ speech }}</p>
           <div class="h-[0.07rem] mt-4 ml-2 w-full bg-zinc-100"></div>
         </div>
 
@@ -135,38 +133,44 @@
           </ul>
         </div>
 
-        <div class="synonym mt-12 flex w-full" >
-          <p class="text-zinc-400 font-semibold">Synonyms</p>
-           
-          <ul class="w-full  grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 2xl:grid-cols-7 gap-1">
-            <li
-              class="ml-3 text-purple-500 font-bold"
-              *ngFor = "let synonym of getSynonymsByPartOfSpeech(speech)"
-            >
-              {{ synonym }},
-            </li>
-          </ul>
-        </div>
+        @if(getSynonymsByPartOfSpeech(speech)){
+          <div class="synonym mt-12 flex w-full" >
+            <p class="text-zinc-400 font-semibold">Synonyms</p>
+             
+            <ul class="w-full  grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 2xl:grid-cols-7 gap-1">
+              <li
+                class="ml-3 text-purple-500 font-bold"
+                *ngFor = "let synonym of getSynonymsByPartOfSpeech(speech)"
+              >
+                {{ synonym }},
+              </li>
+            </ul>
+          </div>
+        }
 
-        <div class="synonym mt-12 flex w-full" >
-          <p class="text-zinc-400 font-semibold">Antonyms</p>
-           
-          <ul class="w-full flex">
-            <li
-              class="ml-3 text-purple-500 font-bold"
-              *ngFor = "let antonym of getAntonymsByPartOfSpeech(speech)"
-            >
-              {{ antonym }}
-            </li>
-          </ul>
-        </div>
+        @if(getAntonymsByPartOfSpeech(speech)){
+          <div class="synonym mt-12 flex w-full" >
+            <p class="text-zinc-400 font-semibold">Antonyms</p>
+             
+            <ul class="w-full grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 2xl:grid-cols-7 gap-1">
+              <li
+                class="ml-3 text-purple-500 font-bold"
+                *ngFor = "let antonym of getAntonymsByPartOfSpeech(speech)"
+              >
+                {{ antonym }}
+              </li>
+            </ul>
+          </div>
+        }
+
+        
       </div>
 
       <div class="h-[0.07rem] mt-12 ml-2 w-full bg-zinc-100"></div>
       <p class="text-zinc-400 mt-5 ml-2">
         Source:
         <span class="underline link cursor-pointer text-black"
-          >http://localhost:4200/</span
+          >{{wordUrl}}</span
         >
       </p>
     </div>
