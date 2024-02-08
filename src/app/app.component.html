@@ -116,8 +116,8 @@
         </div>
       </div>
 
-      <div class="meanings-wrap">
-        <div class="prefix flex mt-5 gap-0" *ngFor="let speech of partOfSpeech">
+      <div class="meanings-wrap" *ngFor="let speech of partOfSpeech">
+        <div class="prefix flex mt-5 gap-0" >
           <p class="font-bold text-lg italic">{{ speech }}</p>
           <div class="h-[0.07rem] mt-4 ml-2 w-full bg-zinc-100"></div>
           {{ data.meanings?.definition }}
